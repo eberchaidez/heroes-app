@@ -1,10 +1,19 @@
-import React from 'react'
+import { useContext } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../auth/authContext'
+import { types } from '../../types/types'
 
 export const Navbar = () => {
+  const { user, dispatch } = useContext(AuthContext)
+
   const navigate = useNavigate()
 
   const handleLogout = () => {
+    const action = {
+      type: types.logout
+    }
+
+    dispatch(action)
     navigate('/login', { replace: true })
   }
 
@@ -34,6 +43,12 @@ export const Navbar = () => {
           >
             DC
           </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? 'nav-item  nav-link active' : 'nav-item nav-link')}
+            to='/search'
+          >
+            Search
+          </NavLink>
         </div>
       </div>
 
@@ -41,7 +56,7 @@ export const Navbar = () => {
         <ul className='navbar-nav ml-auto'>
           <span className='nav-item nav-link '>
             <span className='text-info'>
-              eber
+              {user.name}
             </span>
           </span>
           <button

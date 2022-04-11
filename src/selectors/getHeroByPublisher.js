@@ -6,5 +6,7 @@ export const getHeroByPublisher = (publisher) => {
     throw new Error(`Invalid publisher: ${publisher}`)
   }
 
+  console.log('publisher', publisher)
+
   return heroes.filter(hero => hero.publisher === publisher)
 }

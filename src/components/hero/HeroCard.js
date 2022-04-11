@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+const heroImages = require.context('../../assets/img/heroes', true)
+
 export const HeroCard = ({
   id,
   superhero,
@@ -8,40 +10,41 @@ export const HeroCard = ({
   firstAppearance,
   characters
 }) => {
-  const imagePath = `/assets/${id}.jpg`
+  const imagePath = `./${id}.jpg`
 
   return (
-    <div className='col-6 mb-3'>
+    <div className='col animate__animated animate__fadeIn'>
       <div className='card'>
+
         <div className='row no-gutters'>
           <div className='col-4'>
-            <img
-              alt={superhero}
-              className='card-img'
-              src={imagePath}
-            />
+            <img src={heroImages(imagePath)} className='card-img' alt={superhero} />
           </div>
           <div className='col-8'>
+
             <div className='card-body'>
-              <h1>{superhero}</h1>
-              <ul>
-                <li>
-                  <strong>Alter Ego:</strong> {alterEgo}
-                </li>
-                <li>
-                  <strong>Publisher:</strong> {publisher}
-                </li>
-                <li>
-                  <strong>First Appearance:</strong> {firstAppearance}
-                </li>
-                <li>
-                  <strong>Characters:</strong> {characters}
-                </li>
-              </ul>
-              <Link to={`/hero/${id}`} className='btn btn-primary'> View Details </Link>
+
+              <h5 className='card-title'>{superhero}</h5>
+              <p className='card-text'>{alterEgo}</p>
+
+              {
+                                (alterEgo !== characters) &&
+                                  <p className='text-muted'>{characters}</p>
+                            }
+
+              <p className='card-text'>
+                <small className='text-muted'>{firstAppearance}</small>
+              </p>
+
+              <Link to={`/hero/${id}`}>
+                Más...
+              </Link>
+
             </div>
+
           </div>
         </div>
+
       </div>
     </div>
   )

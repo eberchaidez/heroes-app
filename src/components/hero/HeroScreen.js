@@ -1,11 +1,14 @@
+import { useMemo } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { heroes } from '../../data/heroes'
+import { getHeroById } from '../../selectors/getHeroById'
+
+const heroImages = require.context('../../assets/img/heroes', true)
 
 export const HeroScreen = () => {
   const { heroId } = useParams()
   const navigate = useNavigate()
 
-  const hero = heroes.find(hero => hero.id === heroId)
+  const hero = useMemo(() => getHeroById(heroId), [heroId])
 
   const handleReturn = () => {
     navigate(-1)
@@ -23,13 +26,14 @@ export const HeroScreen = () => {
     characters
   } = hero
 
-  const imagePath = `/assets/${id}.jpg`
+  const imagePath = `./${id}.jpg`
 
   return (
     <div className='row mt-5'>
       <div className='col-4'>
         <img
-          src={imagePath}
+          // src={imagePath} desde public/assets
+          src={heroImages(imagePath)}
           alt={superhero}
           className='img-thumbnail animate__animated animate__fadeInLeft'
         />
